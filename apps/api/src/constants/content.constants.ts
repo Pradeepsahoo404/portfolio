@@ -33,6 +33,7 @@ export const SOCIAL_PLATFORMS = {
   FACEBOOK: "facebook",
   WEBSITE: "website",
   EMAIL: "email",
+  PHONE: "phone",
   WHATSAPP: "whatsapp",
 } as const;
 
