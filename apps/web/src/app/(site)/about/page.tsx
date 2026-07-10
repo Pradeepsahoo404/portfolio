@@ -66,13 +66,13 @@ export default async function AboutPage() {
               <div>
                 <h3 className="text-2xl font-black text-white uppercase tracking-tight mb-3">Expertise & Work</h3>
                 <p className="text-zinc-400 text-base sm:text-lg leading-relaxed font-normal">
-                  With over 3+ years of hands-on experience, I specialize in crafting clean, pixel-perfect frontend interfaces and scalable architectures. I bridge the gap between design theory and technical implementation, translating Figma frames directly into production-grade Next.js, WordPress, and Framer websites.
+                  {data.site?.aboutExpertise || "With over 3+ years of hands-on experience, I specialize in crafting clean, pixel-perfect frontend interfaces and scalable architectures. I bridge the gap between design theory and technical implementation, translating Figma frames directly into production-grade Next.js, WordPress, and Framer websites."}
                 </p>
               </div>
               <div>
                 <h3 className="text-2xl font-black text-white uppercase tracking-tight mb-3">Why Choose Me</h3>
                 <p className="text-zinc-400 text-base sm:text-lg leading-relaxed font-normal">
-                  I focus on creating digital experiences that load fast, feel interactive, and drive user engagement. Every layout is highly responsive and styled with custom micro-animations to guarantee a premium first impression. My workflow is transparent, collaborative, and entirely centered around client success.
+                  {data.site?.aboutWhyChooseMe || "I focus on creating digital experiences that load fast, feel interactive, and drive user engagement. Every layout is highly responsive and styled with custom micro-animations to guarantee a premium first impression. My workflow is transparent, collaborative, and entirely centered around client success."}
                 </p>
               </div>
             </div>

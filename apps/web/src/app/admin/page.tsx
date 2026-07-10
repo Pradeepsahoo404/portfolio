@@ -52,12 +52,13 @@ export default function AdminDashboardPage() {
   const [editingItem, setEditingItem] = useState<{ type: TabType; data: any } | null>(null);
   const [isAddingNew, setIsAddingNew] = useState(false);
 
-  // General settings form state
   const [settingsForm, setSettingsForm] = useState({
     name: "",
     tagline: "",
     description: "",
     logo: "",
+    aboutExpertise: "",
+    aboutWhyChooseMe: "",
   });
 
   // Entity form states — default status is "draft" (unlisted)
@@ -127,6 +128,8 @@ export default function AdminDashboardPage() {
           tagline: data.site?.tagline || "",
           description: data.workspace?.description || "",
           logo: data.site?.logo || data.workspace?.logo || "",
+          aboutExpertise: data.site?.aboutExpertise || "",
+          aboutWhyChooseMe: data.site?.aboutWhyChooseMe || "",
         });
       })
       .catch(() => {
@@ -582,6 +585,26 @@ export default function AdminDashboardPage() {
                       onChange={(e) => setSettingsForm({ ...settingsForm, description: e.target.value })}
                       className="w-full bg-zinc-950/40 border border-zinc-900 hover:border-zinc-800 focus:border-[#2563eb] rounded-2xl p-4 text-white text-sm focus:outline-none transition duration-300 resize-none"
                       required
+                    />
+                  </div>
+                  <div>
+                    <label className="text-zinc-400 font-bold text-xs uppercase tracking-wider mb-2.5 block">Expertise & Work (About Page)</label>
+                    <textarea
+                      rows={4}
+                      value={settingsForm.aboutExpertise}
+                      onChange={(e) => setSettingsForm({ ...settingsForm, aboutExpertise: e.target.value })}
+                      className="w-full bg-zinc-950/40 border border-zinc-900 hover:border-zinc-800 focus:border-[#2563eb] rounded-2xl p-4 text-white text-sm focus:outline-none transition duration-300"
+                      placeholder="e.g. With over 3+ years of experience, I specialize in crafting clean interfaces..."
+                    />
+                  </div>
+                  <div>
+                    <label className="text-zinc-400 font-bold text-xs uppercase tracking-wider mb-2.5 block">Why Choose Me (About Page)</label>
+                    <textarea
+                      rows={4}
+                      value={settingsForm.aboutWhyChooseMe}
+                      onChange={(e) => setSettingsForm({ ...settingsForm, aboutWhyChooseMe: e.target.value })}
+                      className="w-full bg-zinc-950/40 border border-zinc-900 hover:border-zinc-800 focus:border-[#2563eb] rounded-2xl p-4 text-white text-sm focus:outline-none transition duration-300"
+                      placeholder="e.g. I focus on creating digital experiences that load fast..."
                     />
                   </div>
                   <div>

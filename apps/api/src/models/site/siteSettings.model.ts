@@ -11,6 +11,8 @@ export interface ISiteSettings extends Document {
   contactEmail?: string;
   contactPhone?: string;
   address?: string;
+  aboutExpertise?: string;
+  aboutWhyChooseMe?: string;
   timezone?: string;
   language?: string;
   maintenanceMode: boolean;
@@ -48,6 +50,8 @@ const siteSettingsSchema = new Schema<ISiteSettings>(
     contactEmail: { type: String },
     contactPhone: { type: String },
     address: { type: String },
+    aboutExpertise: { type: String },
+    aboutWhyChooseMe: { type: String },
     timezone: { type: String, default: "UTC" },
     language: { type: String, default: "en" },
     maintenanceMode: { type: Boolean, default: false },

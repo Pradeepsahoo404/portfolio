@@ -14,6 +14,8 @@ export interface HomeData {
     description?: string;
     contactEmail?: string;
     logo?: string;
+    aboutExpertise?: string;
+    aboutWhyChooseMe?: string;
   };
   socialLinks: Array<{ platform: string; label: string; url: string }>;
   stats: { projects: number; blogs: number; clients: number; skills: number };
@@ -220,6 +222,8 @@ export interface AdminPayload {
     tagline?: string;
     description?: string;
     logo?: string;
+    aboutExpertise?: string;
+    aboutWhyChooseMe?: string;
   };
   projects: any[];
   services: any[];
@@ -259,7 +263,7 @@ export function getAdminData(token: string) {
   return adminRequest<AdminPayload>("/data", "GET", token);
 }
 
-export function updateAdminWorkspace(token: string, data: { name: string; description: string; tagline?: string }) {
+export function updateAdminWorkspace(token: string, data: { name: string; description: string; tagline?: string; logo?: string; aboutExpertise?: string; aboutWhyChooseMe?: string }) {
   return adminRequest<any>("/workspace", "PUT", token, data);
 }
 
