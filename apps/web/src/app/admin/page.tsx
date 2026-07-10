@@ -3,6 +3,12 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import dynamic from "next/dynamic";
+
+import "@uiw/react-md-editor/markdown-editor.css";
+import "@uiw/react-markdown-preview/markdown.css";
+
+const MDEditor = dynamic(() => import("@uiw/react-md-editor"), { ssr: false });
 import { TOKEN_KEY } from "@/lib/auth";
 import {
   getMe,
@@ -1271,13 +1277,14 @@ export default function AdminDashboardPage() {
                       </div>
                       <div>
                         <label className="text-zinc-400 font-bold text-xs uppercase tracking-wider mb-2 block">Post Content (Markdown or Text)</label>
-                        <textarea
-                          rows={10}
-                          value={blogForm.content}
-                          onChange={(e) => setBlogForm({ ...blogForm, content: e.target.value })}
-                          className="w-full bg-zinc-950/40 border border-zinc-900 focus:border-[#2563eb] rounded-2xl p-4 text-white text-sm focus:outline-none transition resize-none"
-                          required
-                        />
+                        <div data-color-mode="dark" className="border border-zinc-900 focus-within:border-[#2563eb] rounded-2xl overflow-hidden transition mt-2">
+                          <MDEditor
+                            value={blogForm.content}
+                            onChange={(val) => setBlogForm({ ...blogForm, content: val || "" })}
+                            height={400}
+                            style={{ backgroundColor: 'rgba(24, 24, 27, 0.4)' }}
+                          />
+                        </div>
                       </div>
                       <div>
                         <label className="text-zinc-400 font-bold text-xs uppercase tracking-wider mb-2 block">Status (Visibility)</label>

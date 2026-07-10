@@ -37,7 +37,7 @@ export default async function HomePage() {
       {/* Main Grid Layout */}
       <div className="mx-auto max-w-7xl">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
-          
+
           {/* LEFT SIDE: Profile Card */}
           <div className="col-span-1 lg:col-span-4 lg:sticky lg:top-20">
             <ProfileCard
@@ -50,7 +50,7 @@ export default async function HomePage() {
 
           {/* RIGHT SIDE: Hero Header, Stats, Cards, Projects, Experience, Blog, Tools, Contact */}
           <div className="col-span-1 lg:col-span-8 flex flex-col gap-16 lg:gap-24">
-            
+
             {/* Typography Section */}
             <div>
               <h1 className="flex flex-col text-[11vw] xs:text-[10vw] sm:text-[8vw] lg:text-[6.5vw] font-black tracking-tighter leading-[0.85] uppercase">
@@ -92,7 +92,7 @@ export default async function HomePage() {
 
             {/* Feature Cards Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              
+
               {/* Card 1: Orange - Dynamic Animation */}
               <Link
                 href="/services"
@@ -275,19 +275,28 @@ export default async function HomePage() {
               <div className="flex flex-col gap-6">
                 {[
                   {
-                    role: "PixelForge Studios",
-                    desc: "Led the design team in creating user-centric mobile and web applications, improving the user experience and increasing user engagement.",
-                    duration: "Jan 2020 - Present",
+                    role: "Freelancer & Business Development Executive",
+                    company: "Codespace Infotech",
+                    desc: "Generated and closed client projects while delivering scalable web solutions including business websites, CRM systems, e-commerce platforms, and AI integrations. Worked closely with clients from requirement gathering to successful project delivery.",
+                    duration: "Oct 2024 - Present",
                   },
                   {
-                    role: "BlueWave Innovators",
-                    desc: "Developed and implemented design strategies for new product lines, collaborated closely with engineers and product managers.",
-                    duration: "Jun 2017 - Dec 2019",
+                    role: "Full Stack Developer",
+                    company: "Sourrcecube Technologies Pvt Ltd",
+                    desc: "Built scalable MERN Stack applications, developed secure REST APIs, integrated third-party services, and optimized application performance for enterprise and startup clients.",
+                    duration: "Jun 2025 - Mar 2026",
                   },
                   {
-                    role: "TrendCraft Solutions",
-                    desc: "Designed user interfaces for e-commerce and SaaS platforms, built responsive web designs and digital assets.",
-                    duration: "Mar 2014 - May 2017",
+                    role: "Full Stack Developer",
+                    company: "Kukami Technology",
+                    desc: "Designed and developed modern web applications with React.js, Node.js, and MongoDB, focusing on performance, responsive design, and scalable architecture.",
+                    duration: "Jun 2024 - May 2025",
+                  },
+                  {
+                    role: "Software Developer",
+                    company: "Anxion WebTech Private Limited",
+                    desc: "Started my professional journey by developing responsive websites, admin dashboards, and business applications while collaborating with senior developers and designers.",
+                    duration: "Jun 2023 - May 2024",
                   },
                 ].map((exp, idx) => (
                   <div
@@ -299,6 +308,9 @@ export default async function HomePage() {
                         <h3 className="text-xl font-bold text-white group-hover:text-[#2563eb] transition-colors">
                           {exp.role}
                         </h3>
+                        <h4 className="text-md font-medium text-zinc-300 mt-1">
+                          {exp.company}
+                        </h4>
                         <p className="text-sm leading-relaxed text-zinc-400 mt-2 font-normal">
                           {exp.desc}
                         </p>

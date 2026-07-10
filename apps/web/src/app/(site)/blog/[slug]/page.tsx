@@ -3,6 +3,8 @@ import { notFound } from "next/navigation";
 import { getHomeData, getBlogBySlug } from "@/lib/api";
 import { ContactForm } from "@/components/ContactForm";
 import { ProfileCard } from "@/components/ProfileCard";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -115,7 +117,9 @@ export default async function BlogDetailPage({ params }: Props) {
               prose-headings:text-white prose-headings:font-black prose-headings:tracking-tight
               prose-a:text-[#2563eb] prose-a:no-underline hover:prose-a:underline
               prose-strong:text-white prose-code:text-[#d3f261] prose-pre:bg-zinc-900 prose-pre:rounded-xl">
-              <div dangerouslySetInnerHTML={{ __html: blog.content || "" }} />
+              <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                {blog.content || ""}
+              </ReactMarkdown>
             </div>
 
             {/* Key highlights / Info cards */}
