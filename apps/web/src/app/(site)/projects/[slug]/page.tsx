@@ -196,7 +196,6 @@ export default async function ProjectDetailPage({ params }: Props) {
                           src={tech.icon}
                           alt=""
                           className="w-4 h-4 object-contain flex-shrink-0"
-                          onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }}
                         />
                       )}
                       {tech.name}
