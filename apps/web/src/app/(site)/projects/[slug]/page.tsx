@@ -22,13 +22,17 @@ export default async function ProjectDetailPage({ params }: Props) {
   const description = data?.workspace?.description || data?.site?.description || "A Software Engineer who has developed countless innovative solutions.";
   const socialLinks = data?.socialLinks ?? [];
 
-  const completedDate = project.completedAt
-    ? new Date(project.completedAt).toLocaleDateString("en-US", {
+  let completedDate: string | null = null;
+  if (project.completedAt) {
+    const d = new Date(project.completedAt);
+    if (!isNaN(d.getTime())) {
+      completedDate = d.toLocaleDateString("en-US", {
         month: "long",
         day: "numeric",
         year: "numeric",
-      })
-    : null;
+      });
+    }
+  }
 
   return (
     <main className="relative min-h-screen bg-[#0f0f0f] text-zinc-100 pt-28 pb-20 px-6 sm:px-10 lg:px-16 xl:px-24">
@@ -170,14 +174,14 @@ export default async function ProjectDetailPage({ params }: Props) {
             </div>
 
             {/* Technologies */}
-            {project.technologyIds && project.technologyIds.length > 0 && (
+            {project.technologyIds && project.technologyIds.filter(tech => tech != null).length > 0 && (
               <div>
                 <h3 className="text-white font-black text-base uppercase tracking-widest mb-5 flex items-center gap-2">
                   <span className="inline-block w-4 h-[2px] bg-[#2563eb]" />
                   Technologies Used
                 </h3>
                 <div className="flex flex-wrap gap-3">
-                  {(project.technologyIds as TechnologyItem[]).map((tech) => (
+                  {(project.technologyIds as TechnologyItem[]).filter(tech => tech != null).map((tech) => (
                     <span
                       key={tech._id}
                       className="inline-flex items-center gap-2 px-4 py-2.5 rounded-2xl border text-sm font-semibold transition-all duration-200 hover:scale-105 cursor-default"

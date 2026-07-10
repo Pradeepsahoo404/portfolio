@@ -6,7 +6,8 @@
  * - Then lists the FIRST 6 of each section (by their existing sort order)
  */
 
-import { MongoClient } from "mongodb";
+import { mongo } from "mongoose";
+const { MongoClient } = mongo;
 
 const MONGO_URI = "mongodb+srv://autodhundigital_db_user:0p68lY7gbyKHCJuV@cluster0.qo9s5eo.mongodb.net/portfolio";
 const WORKSPACE_SLUG = "pradeep-sahoo-studio";
