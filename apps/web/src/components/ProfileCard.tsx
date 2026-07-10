@@ -103,6 +103,7 @@ export function ProfileCard({ displayName, description, socialLinks, avatarUrl }
 
   const links = (socialLinks && socialLinks.length > 0 ? socialLinks : DEFAULT_SOCIAL)
     .filter((link) => {
+      if (!link || !link.platform) return false;
       const p = link.platform.toLowerCase();
       return p !== "dribbble" && p !== "youtube" && p !== "website";
     });
