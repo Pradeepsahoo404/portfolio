@@ -70,7 +70,7 @@ export async function getHomeData(): Promise<HomeData | null> {
 }
 
 export interface BootstrapData {
-  workspace: { name: string; slug: string; description?: string };
+  workspace: { name: string; slug: string; description?: string; logo?: string };
   site?: {
     siteName: string;
     tagline?: string;
@@ -78,6 +78,7 @@ export interface BootstrapData {
     contactEmail?: string;
     contactPhone?: string;
     address?: string;
+    logo?: string;
   };
   socialLinks: Array<{ platform: string; label: string; url: string }>;
 }
