@@ -1,0 +1,24 @@
+{
+  "name": "portfolio-platform",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Personal Portfolio + Agency Portfolio + CMS Platform",
+  "workspaces": [
+    "apps/*"
+  ],
+  "scripts": {
+    "dev": "npm run dev --workspace=@portfolio/api",
+    "dev:api": "npm run dev --workspace=@portfolio/api",
+    "dev:web": "npm run dev --workspace=@portfolio/web",
+    "dev:all": "npm run dev:api & npm run dev:web",
+    "build": "npm run build --workspace=@portfolio/api",
+    "build:api": "npm run build --workspace=@portfolio/api",
+    "build:web": "npm run build --workspace=@portfolio/web",
+    "start:api": "npm run start --workspace=@portfolio/api",
+    "seed": "npm run seed --workspace=@portfolio/api",
+    "lint:api": "npm run lint --workspace=@portfolio/api"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}
