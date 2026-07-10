@@ -8,8 +8,8 @@ import { TOKEN_KEY } from "@/lib/auth";
 
 export default function AdminLoginPage() {
   const router = useRouter();
-  const [email, setEmail] = useState("admin@portfolio.com");
-  const [password, setPassword] = useState("Admin@123");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -46,6 +46,7 @@ export default function AdminLoginPage() {
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+              placeholder="Enter your email"
               className="w-full rounded-xl border border-zinc-700 bg-zinc-950 px-4 py-3 text-white outline-none focus:border-blue-500"
               required
             />
@@ -54,6 +55,7 @@ export default function AdminLoginPage() {
             <label htmlFor="password" className="mb-2 block text-sm text-zinc-300">Password</label>
             <input
               id="password"
+              placeholder="Enter your password"
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
@@ -73,11 +75,6 @@ export default function AdminLoginPage() {
           </button>
         </form>
 
-        <div className="mt-6 rounded-xl border border-zinc-800 bg-zinc-950 p-4 text-sm text-zinc-400">
-          <p className="font-medium text-zinc-300">Default credentials</p>
-          <p className="mt-2">Email: <span className="text-white">admin@portfolio.com</span></p>
-          <p>Password: <span className="text-white">Admin@123</span></p>
-        </div>
 
         <p className="mt-6 text-center text-sm text-zinc-500">
           <Link href="/" className="hover:text-zinc-300">← Back to website</Link>

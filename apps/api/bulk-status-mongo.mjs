@@ -9,8 +9,15 @@
 import { mongo } from "mongoose";
 const { MongoClient } = mongo;
 
-const MONGO_URI = "mongodb+srv://autodhundigital_db_user:0p68lY7gbyKHCJuV@cluster0.qo9s5eo.mongodb.net/portfolio";
-const WORKSPACE_SLUG = "pradeep-sahoo-studio";
+import dotenv from "dotenv";
+import path from "path";
+
+// Load environment variables
+dotenv.config({ path: path.resolve(process.cwd(), ".env") });
+dotenv.config({ path: path.resolve(process.cwd(), "apps/api/.env") });
+
+const MONGO_URI = process.env.MONGODB_URI;
+const WORKSPACE_SLUG = process.env.WORKSPACE_SLUG || "pradeep-sahoo-studio";
 
 async function main() {
   console.log("🔌 Connecting to MongoDB...");
