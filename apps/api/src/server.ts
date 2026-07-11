@@ -9,7 +9,9 @@ import { logger } from "./utils/logger.util.js";
 async function bootstrap(): Promise<void> {
   await connectDatabase();
   await syncIndexes();
-  await verifyEmailConnection();
+  
+  // Do not await email verification so the server can start immediately
+  verifyEmailConnection().catch((err) => logger.error("Email verification error", { err }));
 
   const app = createApp();
 
