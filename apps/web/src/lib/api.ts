@@ -16,6 +16,8 @@ export interface HomeData {
     logo?: string;
     aboutExpertise?: string;
     aboutWhyChooseMe?: string;
+    linkedinUrl?: string;
+    resumePdfUrl?: string;
   };
   socialLinks: Array<{ platform: string; label: string; url: string }>;
   stats: { projects: number; blogs: number; clients: number; skills: number };
@@ -81,6 +83,8 @@ export interface BootstrapData {
     contactPhone?: string;
     address?: string;
     logo?: string;
+    linkedinUrl?: string;
+    resumePdfUrl?: string;
   };
   socialLinks: Array<{ platform: string; label: string; url: string }>;
 }
@@ -224,6 +228,8 @@ export interface AdminPayload {
     logo?: string;
     aboutExpertise?: string;
     aboutWhyChooseMe?: string;
+    linkedinUrl?: string;
+    resumePdfUrl?: string;
   };
   projects: any[];
   services: any[];
@@ -263,7 +269,7 @@ export function getAdminData(token: string) {
   return adminRequest<AdminPayload>("/data", "GET", token);
 }
 
-export function updateAdminWorkspace(token: string, data: { name: string; description: string; tagline?: string; logo?: string; aboutExpertise?: string; aboutWhyChooseMe?: string }) {
+export function updateAdminWorkspace(token: string, data: { name: string; description: string; tagline?: string; logo?: string; aboutExpertise?: string; aboutWhyChooseMe?: string; linkedinUrl?: string; resumePdfUrl?: string; }) {
   return adminRequest<any>("/workspace", "PUT", token, data);
 }
 

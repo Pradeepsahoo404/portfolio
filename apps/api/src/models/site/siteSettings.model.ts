@@ -13,6 +13,8 @@ export interface ISiteSettings extends Document {
   address?: string;
   aboutExpertise?: string;
   aboutWhyChooseMe?: string;
+  linkedinUrl?: string;
+  resumePdfUrl?: string;
   timezone?: string;
   language?: string;
   maintenanceMode: boolean;
@@ -52,6 +54,8 @@ const siteSettingsSchema = new Schema<ISiteSettings>(
     address: { type: String },
     aboutExpertise: { type: String },
     aboutWhyChooseMe: { type: String },
+    linkedinUrl: { type: String, trim: true },
+    resumePdfUrl: { type: String, trim: true },
     timezone: { type: String, default: "UTC" },
     language: { type: String, default: "en" },
     maintenanceMode: { type: Boolean, default: false },

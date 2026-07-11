@@ -65,6 +65,8 @@ export default function AdminDashboardPage() {
     logo: "",
     aboutExpertise: "",
     aboutWhyChooseMe: "",
+    linkedinUrl: "",
+    resumePdfUrl: "",
   });
 
   // Entity form states — default status is "draft" (unlisted)
@@ -136,6 +138,8 @@ export default function AdminDashboardPage() {
           logo: data.site?.logo || data.workspace?.logo || "",
           aboutExpertise: data.site?.aboutExpertise || "",
           aboutWhyChooseMe: data.site?.aboutWhyChooseMe || "",
+          linkedinUrl: data.site?.linkedinUrl || "",
+          resumePdfUrl: data.site?.resumePdfUrl || "",
         });
       })
       .catch(() => {
@@ -643,6 +647,17 @@ export default function AdminDashboardPage() {
                       </div>
                     </div>
                   </div>
+                  <div>
+                    <label className="text-zinc-400 font-bold text-xs uppercase tracking-wider mb-2.5 block">LinkedIn URL</label>
+                    <input
+                      type="url"
+                      value={settingsForm.linkedinUrl}
+                      onChange={(e) => setSettingsForm({ ...settingsForm, linkedinUrl: e.target.value })}
+                      placeholder="https://linkedin.com/in/yourprofile"
+                      className="w-full bg-zinc-950/40 border border-zinc-900 hover:border-zinc-800 focus:border-[#2563eb] rounded-2xl p-4 text-white text-sm focus:outline-none transition duration-300"
+                    />
+                  </div>
+
                   <button type="submit" className="bg-[#2563eb] hover:bg-blue-600 text-white font-extrabold px-8 py-4 rounded-2xl text-sm transition-all duration-300 hover:scale-103 shadow-md hover:shadow-lg self-start cursor-pointer">
                     Save General Settings
                   </button>

@@ -1,6 +1,7 @@
 import { getBootstrap } from "@/lib/api";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
+import FloatingActions from "@/components/FloatingActions";
 
 export default async function SiteLayout({ children }: { children: React.ReactNode }) {
   const bootstrap = await getBootstrap();
@@ -11,6 +12,10 @@ export default async function SiteLayout({ children }: { children: React.ReactNo
       <SiteHeader siteName={siteName} />
       {children}
       <SiteFooter siteName={siteName} />
+      <FloatingActions 
+        linkedinUrl={bootstrap?.site?.linkedinUrl} 
+        resumePdfUrl={bootstrap?.site?.resumePdfUrl} 
+      />
     </div>
   );
 }

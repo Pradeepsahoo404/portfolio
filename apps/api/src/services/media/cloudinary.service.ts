@@ -28,11 +28,12 @@ export async function uploadToCloudinary(
   const uploadFolder = folder ?? cloudinaryConfig.folder;
 
   return new Promise((resolve, reject) => {
+    const isPdf = originalName.toLowerCase().endsWith(".pdf");
     const uploadStream = cloudinary.uploader.upload_stream(
       {
         folder: uploadFolder,
-        resource_type: "auto",
-        public_id: `${Date.now()}-${originalName.replace(/\.[^/.]+$/, "")}`,
+        resource_type: isPdf ? "raw" : "auto",
+        public_id: `${Date.now()}-${originalName.replace(/\.[^/.]+$/, "")}${isPdf ? ".pdf" : ""}`,
       },
       (error, result) => {
         if (error || !result) {
@@ -40,11 +41,12 @@ export async function uploadToCloudinary(
           return reject(error ?? new Error("Upload failed"));
         }
 
+        const fileExt = originalName.split('.').pop() || "raw";
         resolve({
           publicId: result.public_id,
           url: result.url,
           secureUrl: result.secure_url,
-          format: result.format ?? "",
+          format: result.format || fileExt || "raw",
           resourceType: result.resource_type,
           bytes: result.bytes,
           width: result.width,

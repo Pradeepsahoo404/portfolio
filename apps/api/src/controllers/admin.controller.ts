@@ -50,7 +50,7 @@ export class AdminController {
   // Update workspace/settings (home / about texts)
   updateWorkspace = asyncHandler(async (req: Request, res: Response) => {
     const workspace = await this.getWorkspace(req);
-    const { name, description, tagline, logo, aboutExpertise, aboutWhyChooseMe } = req.body;
+    const { name, description, tagline, logo, aboutExpertise, aboutWhyChooseMe, linkedinUrl, resumePdfUrl } = req.body;
 
     workspace.name = name || workspace.name;
     workspace.description = description || workspace.description;
@@ -71,6 +71,12 @@ export class AdminController {
       }
       if (aboutWhyChooseMe !== undefined) {
         site.aboutWhyChooseMe = aboutWhyChooseMe;
+      }
+      if (linkedinUrl !== undefined) {
+        site.linkedinUrl = linkedinUrl;
+      }
+      if (resumePdfUrl !== undefined) {
+        site.resumePdfUrl = resumePdfUrl;
       }
       await site.save();
     }
