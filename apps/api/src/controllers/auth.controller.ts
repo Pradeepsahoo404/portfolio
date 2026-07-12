@@ -30,25 +30,7 @@ export class AuthController {
     return ApiResponse.success(res, { user }, "User profile fetched");
   });
 
-  verifyEmail = asyncHandler(async (req: Request, res: Response) => {
-    const result = await authService.verifyEmail(req.body);
-    return ApiResponse.success(res, result, result.message);
-  });
 
-  resendVerification = asyncHandler(async (req: Request, res: Response) => {
-    const result = await authService.resendVerification(req.body);
-    return ApiResponse.success(res, result, result.message);
-  });
-
-  forgotPassword = asyncHandler(async (req: Request, res: Response) => {
-    const result = await authService.forgotPassword(req.body);
-    return ApiResponse.success(res, result, result.message);
-  });
-
-  resetPassword = asyncHandler(async (req: Request, res: Response) => {
-    const result = await authService.resetPassword(req.body);
-    return ApiResponse.success(res, result, result.message);
-  });
 
   changePassword = asyncHandler(async (req: Request, res: Response) => {
     const result = await authService.changePassword(req.user!._id.toString(), req.body);

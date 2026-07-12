@@ -6,10 +6,6 @@ import { authRateLimiter } from "../../middlewares/rateLimiter.middleware.js";
 import {
   registerValidator,
   loginValidator,
-  forgotPasswordValidator,
-  resetPasswordValidator,
-  verifyEmailValidator,
-  resendVerificationValidator,
   googleAuthValidator,
   changePasswordValidator,
 } from "../../validators/auth.validator.js";
@@ -24,23 +20,7 @@ router.post("/refresh", authController.refresh);
 router.post("/logout", authenticate, authController.logout);
 router.get("/me", authenticate, authController.getMe);
 
-router.post("/verify-email", validate(verifyEmailValidator), authController.verifyEmail);
-router.post(
-  "/resend-verification",
-  validate(resendVerificationValidator),
-  authController.resendVerification
-);
 
-router.post(
-  "/forgot-password",
-  validate(forgotPasswordValidator),
-  authController.forgotPassword
-);
-router.post(
-  "/reset-password",
-  validate(resetPasswordValidator),
-  authController.resetPassword
-);
 router.post(
   "/change-password",
   authenticate,

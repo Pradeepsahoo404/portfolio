@@ -4,7 +4,7 @@ export { databaseConfig } from "./database.config.js";
 export { jwtConfig } from "./jwt.config.js";
 export { cookieConfig } from "./cookie.config.js";
 export { corsConfig } from "./cors.config.js";
-export { emailConfig } from "./email.config.js";
+
 export { cloudinaryConfig } from "./cloudinary.config.js";
 export { googleConfig } from "./google.config.js";
 export { rateLimitConfig } from "./rateLimit.config.js";

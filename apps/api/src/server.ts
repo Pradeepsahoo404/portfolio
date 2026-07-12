@@ -2,7 +2,6 @@ import { createApp } from "./app.js";
 import { connectDatabase, disconnectDatabase } from "./database/connection.js";
 import { startCronJobs } from "./cron/index.js";
 import { syncIndexes } from "./database/indexes/index.js";
-import { verifyEmailConnection } from "./emails/mailer.js";
 import { appConfig } from "./config/index.js";
 import { logger } from "./utils/logger.util.js";
 
@@ -10,8 +9,6 @@ async function bootstrap(): Promise<void> {
   await connectDatabase();
   await syncIndexes();
   
-  // Do not await email verification so the server can start immediately
-  verifyEmailConnection().catch((err) => logger.error("Email verification error", { err }));
 
   const app = createApp();
 

@@ -31,16 +31,6 @@ const envSchema = z.object({
     .default("false"),
   COOKIE_SAME_SITE: z.enum(["strict", "lax", "none"]).default("lax"),
 
-  SMTP_HOST: z.string().min(1),
-  SMTP_PORT: z.coerce.number().default(587),
-  SMTP_SECURE: z
-    .string()
-    .transform((v) => v === "true")
-    .default("false"),
-  SMTP_USER: z.string().min(1),
-  SMTP_PASS: z.string().min(1),
-  EMAIL_FROM: z.string().min(1),
-
   CLOUDINARY_CLOUD_NAME: z.string().min(1),
   CLOUDINARY_API_KEY: z.string().min(1),
   CLOUDINARY_API_SECRET: z.string().min(1),
@@ -58,9 +48,6 @@ const envSchema = z.object({
   ALLOWED_MIME_TYPES: z
     .string()
     .default("image/jpeg,image/png,image/webp,image/gif,application/pdf"),
-
-  EMAIL_VERIFICATION_EXPIRES_HOURS: z.coerce.number().default(24),
-  PASSWORD_RESET_EXPIRES_HOURS: z.coerce.number().default(1),
 
   CRON_ENABLED: z
     .string()

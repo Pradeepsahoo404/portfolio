@@ -2,7 +2,7 @@ import type { Request, Response } from "express";
 import { userRepository } from "../../repositories/auth/user.repository.js";
 import { userTokenRepository } from "../../repositories/auth/userToken.repository.js";
 import { tokenService } from "./token.service.js";
-import { emailService } from "../email/email.service.js";
+
 import { googleAuthService } from "./googleAuth.service.js";
 import {
   hashPassword,
@@ -22,16 +22,11 @@ import {
 import { ERROR_CODES } from "../../constants/errorCodes.constants.js";
 import { AUTH_PROVIDERS, TOKEN_TYPES } from "../../constants/auth.constants.js";
 import { ROLES } from "../../constants/roles.constants.js";
-import { emailConfig } from "../../config/index.js";
 import type {
   RegisterDto,
   LoginDto,
-  ForgotPasswordDto,
-  ResetPasswordDto,
-  VerifyEmailDto,
   GoogleAuthDto,
   ChangePasswordDto,
-  ResendVerificationDto,
 } from "../../dtos/auth/auth.dto.js";
 import type { IUser } from "../../models/auth/user.model.js";
 
@@ -84,13 +79,6 @@ export class AuthService {
       role: ROLES.USER,
     } as never);
 
-    const verificationToken = await this.createUserToken(
-      user._id.toString(),
-      TOKEN_TYPES.EMAIL_VERIFICATION
-    );
-
-    await emailService.sendWelcomeEmail(user.email, user.firstName, verificationToken);
-
     return { user: this.sanitizeUser(user) };
   }
 
@@ -114,12 +102,6 @@ export class AuthService {
       throw new UnauthorizedError("Invalid email or password");
     }
 
-    if (!user.isEmailVerified && user.authProvider === AUTH_PROVIDERS.LOCAL) {
-      throw new UnauthorizedError(
-        "Please verify your email before logging in",
-        ERROR_CODES.EMAIL_NOT_VERIFIED
-      );
-    }
 
     await userRepository.updateLastLogin(user._id.toString());
 
@@ -181,86 +163,7 @@ export class AuthService {
     return this.sanitizeUser(user);
   }
 
-  async verifyEmail(dto: VerifyEmailDto): Promise<{ message: string }> {
-    const { user, tokenDocId } = await this.validateUserToken(
-      dto.token,
-      TOKEN_TYPES.EMAIL_VERIFICATION
-    );
 
-    await userRepository.update(user._id.toString(), {
-      isEmailVerified: true,
-    } as never);
-
-    await userTokenRepository.markAsUsed(tokenDocId);
-
-    return { message: "Email verified successfully" };
-  }
-
-  async resendVerification(dto: ResendVerificationDto): Promise<{ message: string }> {
-    const user = await userRepository.findByEmailPublic(dto.email);
-
-    if (!user) {
-      return { message: "If the email exists, a verification link has been sent" };
-    }
-
-    if (user.isEmailVerified) {
-      throw new BadRequestError("Email is already verified");
-    }
-
-    await userTokenRepository.invalidateUserTokens(
-      user._id.toString(),
-      TOKEN_TYPES.EMAIL_VERIFICATION
-    );
-
-    const verificationToken = await this.createUserToken(
-      user._id.toString(),
-      TOKEN_TYPES.EMAIL_VERIFICATION
-    );
-
-    await emailService.sendVerificationEmail(user.email, user.firstName, verificationToken);
-
-    return { message: "If the email exists, a verification link has been sent" };
-  }
-
-  async forgotPassword(dto: ForgotPasswordDto): Promise<{ message: string }> {
-    const user = await userRepository.findByEmailPublic(dto.email);
-
-    if (!user || user.authProvider !== AUTH_PROVIDERS.LOCAL) {
-      return { message: "If the email exists, a reset link has been sent" };
-    }
-
-    await userTokenRepository.invalidateUserTokens(
-      user._id.toString(),
-      TOKEN_TYPES.PASSWORD_RESET
-    );
-
-    const resetToken = await this.createUserToken(
-      user._id.toString(),
-      TOKEN_TYPES.PASSWORD_RESET
-    );
-
-    await emailService.sendPasswordResetEmail(user.email, user.firstName, resetToken);
-
-    return { message: "If the email exists, a reset link has been sent" };
-  }
-
-  async resetPassword(dto: ResetPasswordDto): Promise<{ message: string }> {
-    const { user, tokenDocId } = await this.validateUserToken(
-      dto.token,
-      TOKEN_TYPES.PASSWORD_RESET
-    );
-
-    const hashedPassword = await hashPassword(dto.password);
-
-    await userRepository.update(user._id.toString(), {
-      password: hashedPassword,
-    } as never);
-
-    await userTokenRepository.markAsUsed(tokenDocId);
-    await tokenService.revokeAllUserTokens(user._id.toString());
-
-    return { message: "Password reset successfully" };
-  }
 
   async changePassword(userId: string, dto: ChangePasswordDto): Promise<{ message: string }> {
     const existingUser = await userRepository.findByIdOrFail(userId);
@@ -388,16 +291,11 @@ export class AuthService {
     const rawToken = generateSecureToken();
     const tokenHash = await hashToken(rawToken);
 
-    const expiresHours =
-      type === TOKEN_TYPES.EMAIL_VERIFICATION
-        ? emailConfig.verificationExpiresHours
-        : emailConfig.resetExpiresHours;
-
     await userTokenRepository.createToken({
       userId,
       tokenHash,
       type,
-      expiresAt: addHours(new Date(), expiresHours),
+      expiresAt: addHours(new Date(), 1),
     } as never);
 
     return rawToken;
