@@ -1,26 +1,21 @@
 import type { Request, Response } from "express";
 import { userRepository } from "../../repositories/auth/user.repository.js";
-import { userTokenRepository } from "../../repositories/auth/userToken.repository.js";
+
 import { tokenService } from "./token.service.js";
 
 import { googleAuthService } from "./googleAuth.service.js";
 import {
   hashPassword,
   comparePassword,
-  hashToken,
-  compareToken,
 } from "../../utils/hash.util.js";
-import { generateSecureToken } from "../../utils/crypto.util.js";
-import { addHours, isExpired } from "../../utils/date.util.js";
 import {
   ConflictError,
   UnauthorizedError,
-  NotFoundError,
   BadRequestError,
   ForbiddenError,
 } from "../../errors/index.js";
-import { ERROR_CODES } from "../../constants/errorCodes.constants.js";
-import { AUTH_PROVIDERS, TOKEN_TYPES } from "../../constants/auth.constants.js";
+
+import { AUTH_PROVIDERS } from "../../constants/auth.constants.js";
 import { ROLES } from "../../constants/roles.constants.js";
 import type {
   RegisterDto,
@@ -284,47 +279,7 @@ export class AuthService {
     } as never);
   }
 
-  private async createUserToken(
-    userId: string,
-    type: (typeof TOKEN_TYPES)[keyof typeof TOKEN_TYPES]
-  ): Promise<string> {
-    const rawToken = generateSecureToken();
-    const tokenHash = await hashToken(rawToken);
 
-    await userTokenRepository.createToken({
-      userId,
-      tokenHash,
-      type,
-      expiresAt: addHours(new Date(), 1),
-    } as never);
-
-    return rawToken;
-  }
-
-  private async validateUserToken(
-    rawToken: string,
-    type: (typeof TOKEN_TYPES)[keyof typeof TOKEN_TYPES]
-  ): Promise<{ user: IUser; tokenDocId: string }> {
-    const tokens = await userTokenRepository.findActiveTokens(type);
-
-    for (const tokenDoc of tokens) {
-      const isMatch = await compareToken(rawToken, tokenDoc.tokenHash);
-      if (!isMatch) continue;
-
-      if (isExpired(tokenDoc.expiresAt)) {
-        throw new BadRequestError("Token has expired");
-      }
-
-      const user = await userRepository.findById(tokenDoc.userId.toString());
-      if (!user) {
-        throw new NotFoundError("User not found");
-      }
-
-      return { user, tokenDocId: tokenDoc._id.toString() };
-    }
-
-    throw new BadRequestError("Invalid or expired token");
-  }
 }
 
 export const authService = new AuthService();
