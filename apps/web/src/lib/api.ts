@@ -92,7 +92,7 @@ export interface BootstrapData {
 export async function getBootstrap(): Promise<BootstrapData | null> {
   try {
     const res = await fetch(`${getApiUrl()}/public/${WORKSPACE_SLUG}/bootstrap`, {
-      next: { revalidate: 300 },
+      cache: "no-store",
     });
     if (!res.ok) return null;
     const json = await parseApiResponse<BootstrapData>(res);

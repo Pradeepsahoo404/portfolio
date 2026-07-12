@@ -21,7 +21,7 @@ const refreshTokenSchema = new Schema<IRefreshToken>(
       index: true,
     },
     tokenHash: { type: String, required: true },
-    expiresAt: { type: Date, required: true, index: true },
+    expiresAt: { type: Date, required: true },
     isRevoked: { type: Boolean, default: false },
     userAgent: { type: String },
     ipAddress: { type: String },

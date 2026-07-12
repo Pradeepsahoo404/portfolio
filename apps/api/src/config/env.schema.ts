@@ -5,7 +5,13 @@ const envSchema = z.object({
   NODE_ENV: z
     .enum(["development", "production", "test"])
     .default("development"),
-  PORT: z.coerce.number().default(5000),
+  PORT: z
+    .string()
+    .optional()
+    .transform((v) => {
+      const p = Number(v);
+      return p > 0 ? p : 5001; // fallback to 5001 if empty or 0
+    }),
   API_PREFIX: z.string().default("/api/v1"),
   APP_NAME: z.string().default("Portfolio API"),
   APP_URL: z.string().url(),

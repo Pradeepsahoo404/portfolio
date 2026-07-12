@@ -26,7 +26,5 @@ const workspaceSchema = new Schema<IWorkspace>(
 );
 
 addSoftDelete(workspaceSchema);
-workspaceSchema.index({ slug: 1 }, { unique: true });
-workspaceSchema.index({ ownerId: 1 });
 
 export const Workspace = model<IWorkspace>("Workspace", workspaceSchema);
